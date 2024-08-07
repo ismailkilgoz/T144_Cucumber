@@ -3,8 +3,8 @@ Feature: US1002 Kullanici ortak baslangic adimlarini Background olarak yazabilir
   Background:
     Given kullanici toUrl adresine gider
 
+    @smoke
   Scenario: TC04 Kullanici testotomasyonu.com'da phone aratip urun bulabilmeli
-
 
     Then arama kutusuna phone yazip aratir
     And arama sonucunda urun bulunabildigini test eder
