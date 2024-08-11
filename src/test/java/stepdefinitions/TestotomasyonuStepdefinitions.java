@@ -10,6 +10,7 @@ import org.openqa.selenium.NoSuchElementException;
 import pages.TestOtomasyonuPage;
 import utilities.ConfigReader;
 import utilities.Driver;
+import utilities.ReusableMethods;
 
 public class TestotomasyonuStepdefinitions {
 
@@ -117,4 +118,27 @@ public class TestotomasyonuStepdefinitions {
     }
 
 
+    @When("belirlenmis aranacak kelimeyi aratir")
+    public void belirlenmisAranacakKelimeyiAratir() {
+        testOtomasyonuPage.aramaKutusu.sendKeys(ConfigReader.getProperty("toAranacakKelime") + Keys.ENTER);
+    }
+
+    @And("tum sayfanin screenshot'ini alir ve {string} ismiyle kaydeder")
+    public void tumSayfaninScreenshotIniAlirVeIsmiyleKaydeder(String raporIsmi) {
+
+        ReusableMethods.getFullScreenshot(Driver.getDriver(),raporIsmi);
+    }
+
+    @And("acilan sayfadaki urun isminde case sensitive olmadan belirlenmis aranacak bulundugunu test eder")
+    public void acilanSayfadakiUrunIsmindeCaseSensitiveOlmadanBelirlenmisAranacakBulundugunuTestEder() {
+        String expectedIsimIcerik = ConfigReader.getProperty("toAranacakKelime");
+        String actualUrunIsmi = testOtomasyonuPage.ilkUrunSayfasiIsimElementi.getText().toLowerCase();
+
+        Assertions.assertTrue(actualUrunIsmi.contains(expectedIsimIcerik));
+    }
+
+    @And("acilan ilk urun sayfasindaki urun isminin screenshoot'ini alir")
+    public void acilanIlkUrunSayfasindakiUrunIsmininScreenshootIniAlir() {
+        ReusableMethods.getWebelementScreenshot(testOtomasyonuPage.ilkUrunSayfasiIsimElementi, "IlkUrunIsimElementi");
+    }
 }
